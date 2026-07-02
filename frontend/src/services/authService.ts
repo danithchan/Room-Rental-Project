@@ -20,7 +20,7 @@ export interface LoginResponse {
 }
 const ADMIN_KEY = 'ssrms_admin';
 const TOKEN_KEY = 'ssrms_token';
-const BACKEND_URL = 'http://localhost:3000';
+const BACKEND_URL = 'https://room-rental-project.onrender.com';
 export const getAvatarUrl = (avatarurl: string | null): string | null => {
   if (!avatarurl) return null;
   return `${BACKEND_URL}${avatarurl}`;

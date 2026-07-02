@@ -26,7 +26,7 @@ export interface MoveInInput {
   startdate: string;
 }
 
-const BACKEND_URL = 'http://localhost:3000';
+const BACKEND_URL = 'https://room-rental-project.onrender.com';
 export const getImageUrl = (imageurl: string | null): string | null => {
   if (!imageurl) return null;
   return `${BACKEND_URL}${imageurl}`;
