@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  adminid       Int       @id @default(autoincrement())
+  username      String    @unique @db.VarChar(50)
+  password      String    @db.VarChar(255)
+  fullname      String    @db.VarChar(100)
+  phone         String?   @db.VarChar(15)
+  avatarurl     String?   @db.VarChar(255)
+  resetToken    String?
+  resetTokenExp DateTime?
+  rooms         Room[]
+}
+
+model Room {
+  roomid       Int             @id @default(autoincrement())
+  roomnumber   String          @unique @db.VarChar(10)
+  roomtype     String?         @db.VarChar(50)
+  price        Decimal         @db.Decimal(10, 2)
+  status       String          @default("Available") @db.VarChar(20)
+  adminid      Int
+  imageurl     String?         @db.VarChar(255)
+  contracts    LeaseContract[]
+  maintenances Maintenance[]
+  admin        Admin           @relation(fields: [adminid], references: [adminid], onDelete: NoAction, onUpdate: NoAction, map: "FK_Room_Admin")
+}
+
+model Tenant {
+  tenantid     Int             @id @default(autoincrement())
+  fullname     String          @db.VarChar(100)
+  gender       String?         @db.Char(1)
+  phone        String          @db.VarChar(15)
+  idcardnumber String?         @db.VarChar(20)
+  address      String?         @db.VarChar(255)
+  username     String?         @unique @db.VarChar(50)
+  password     String?         @db.VarChar(255)
+  contracts    LeaseContract[]
+}
+
+model LeaseContract {
+  contractid Int       @id @default(autoincrement())
+  startdate  DateTime  @db.Date
+  enddate    DateTime? @db.Date
+  deposit    Decimal   @db.Decimal(10, 2)
+  status     String    @default("Active") @db.VarChar(20)
+  roomid     Int
+  tenantid   Int
+  roomnumber String    @db.VarChar(10)
+  tenantname String    @db.VarChar(100)
+  invoices   Invoice[]
+  room       Room      @relation(fields: [roomid], references: [roomid], onDelete: NoAction, onUpdate: NoAction, map: "FK_Contract_Room")
+  tenant     Tenant    @relation(fields: [tenantid], references: [tenantid], onDelete: NoAction, onUpdate: NoAction, map: "FK_Contract_Tenant")
+}
+
+model Invoice {
+  invoiceid        Int           @id @default(autoincrement())
+  invoicedate      DateTime      @db.Date
+  oldwatermeter    Int           @default(0)
+  newwatermeter    Int           @default(0)
+  oldelectricmeter Int           @default(0)
+  newelectricmeter Int           @default(0)
+  totalamount      Decimal       @default(0) @db.Decimal(10, 2)
+  paymentstatus    String        @default("Unpaid") @db.VarChar(20)
+  contractid       Int
+  roomnumber       String        @db.VarChar(10)
+  tenantname       String        @db.VarChar(100)
+  contract         LeaseContract @relation(fields: [contractid], references: [contractid], onDelete: NoAction, onUpdate: NoAction, map: "FK_Invoice_Contract")
+}
+
+model Maintenance {
+  maintenanceid Int      @id @default(autoincrement())
+  description   String
+  reportdate    DateTime @default(dbgenerated("CURRENT_DATE")) @db.Date
+  cost          Decimal? @db.Decimal(10, 2)
+  status        String   @default("Pending") @db.VarChar(20)
+  roomid        Int
+  roomnumber    String   @db.VarChar(10)
+  room          Room     @relation(fields: [roomid], references: [roomid], onDelete: NoAction, onUpdate: NoAction, map: "FK_Maintenance_Room")
+}
