@@ -108,7 +108,7 @@ function MaintenanceFormModal({ onClose, onSubmit }: MaintenanceFormModalProps) 
                 name="roomid"
                 value={formData.roomid}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 {rooms.map((r) => (
                   <option key={r.roomid} value={r.roomid}>
@@ -128,7 +128,7 @@ function MaintenanceFormModal({ onClose, onSubmit }: MaintenanceFormModalProps) 
                 onChange={handleChange}
                 placeholder="ឧ. អំពូលភ្លើងបែក"
                 rows={3}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -139,7 +139,7 @@ function MaintenanceFormModal({ onClose, onSubmit }: MaintenanceFormModalProps) 
                 name="reportdate"
                 value={formData.reportdate}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -155,7 +155,7 @@ function MaintenanceFormModal({ onClose, onSubmit }: MaintenanceFormModalProps) 
                 placeholder="0"
                 min="0"
                 step="0.01"
-                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -165,7 +165,7 @@ function MaintenanceFormModal({ onClose, onSubmit }: MaintenanceFormModalProps) 
                 name="status"
                 value={formData.status}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="Pending">កំពុងរង់ចាំ</option>
                 <option value="InProgress">កំពុងជួសជុល</option>

@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { getCurrentAdmin } from "../../services/authService";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 const AvatarCard = () => {
   const admin = getCurrentAdmin();
   const ADMIN_ID = admin?.adminid;
@@ -13,12 +15,12 @@ const AvatarCard = () => {
 
   useEffect(() => {
     if (!ADMIN_ID) return;
-    fetch(`http://localhost:3000/api/admin/${ADMIN_ID}`)
+    fetch(`${API_BASE_URL}/api/admin/${ADMIN_ID}`)
       .then((r) => r.json())
       .then((data) => {
         setFullname(data.fullname || "Admin");
         if (data.avatarurl) {
-          setAvatarUrl(`http://localhost:3000${data.avatarurl}`);
+          setAvatarUrl(`${API_BASE_URL}${data.avatarurl}`);
         }
       })
       .catch(() => setFullname("Admin"))
@@ -34,7 +36,7 @@ const AvatarCard = () => {
     try {
       const token = localStorage.getItem("ssrms_token") || "";
       const res = await fetch(
-        `http://localhost:3000/api/admin/${ADMIN_ID}/upload-avatar`,
+        `${API_BASE_URL}/api/admin/${ADMIN_ID}/upload-avatar`,
         { method: "POST", headers: { Authorization: token }, body: formData }
       );
       const data = await res.json();
@@ -42,7 +44,7 @@ const AvatarCard = () => {
         alert(data.error || "Upload failed!");
         return;
       }
-      setAvatarUrl(`http://localhost:3000${data.avatar}`);
+      setAvatarUrl(`${API_BASE_URL}${data.avatarurl}`);
     } catch {
       alert("Upload failed!");
     } finally {
@@ -57,10 +59,10 @@ const AvatarCard = () => {
       : "");
 
   return (
-    <div className="rounded-2xl border bg-white p-6 shadow-sm">
+    <div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm">
       <div className="flex flex-col items-center">
         {fetching ? (
-          <div className="h-32 w-32 rounded-full border-4 border-pink-500 bg-gray-100 animate-pulse" />
+          <div className="h-32 w-32 rounded-full border-4 border-pink-500 bg-gray-100 dark:bg-gray-700 animate-pulse" />
         ) : (
           <img
             src={avatarSrc}
@@ -68,10 +70,10 @@ const AvatarCard = () => {
             className="h-32 w-32 rounded-full border-4 border-pink-400 object-cover"
           />
         )}
-        <h2 className="mt-4 text-xl font-semibold">
+        <h2 className="mt-4 text-xl font-semibold text-gray-800 dark:text-white">
           {fetching ? "..." : fullname}
         </h2>
-        <p className="text-sm text-gray-500">Administrator</p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">Administrator</p>
         <input type="file" accept="image/*" ref={fileRef} className="hidden" onChange={handleUpload} />
         <button
           onClick={() => fileRef.current?.click()}

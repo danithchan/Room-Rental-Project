@@ -127,7 +127,7 @@ function InvoiceFormModal({ onClose, onSubmit }: InvoiceFormModalProps) {
                 name="contractid"
                 value={formData.contractid}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 {contracts.map((c) => (
                   <option key={c.contractid} value={c.contractid}>
@@ -144,7 +144,7 @@ function InvoiceFormModal({ onClose, onSubmit }: InvoiceFormModalProps) {
                 name="invoicedate"
                 value={formData.invoicedate}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -159,7 +159,7 @@ function InvoiceFormModal({ onClose, onSubmit }: InvoiceFormModalProps) {
                   value={formData.oldwatermeter}
                   onChange={handleChange}
                   min="0"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
               <div>
@@ -172,7 +172,7 @@ function InvoiceFormModal({ onClose, onSubmit }: InvoiceFormModalProps) {
                   value={formData.newwatermeter}
                   onChange={handleChange}
                   min="0"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             </div>
@@ -188,7 +188,7 @@ function InvoiceFormModal({ onClose, onSubmit }: InvoiceFormModalProps) {
                   value={formData.oldelectricmeter}
                   onChange={handleChange}
                   min="0"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
               <div>
@@ -201,7 +201,7 @@ function InvoiceFormModal({ onClose, onSubmit }: InvoiceFormModalProps) {
                   value={formData.newelectricmeter}
                   onChange={handleChange}
                   min="0"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             </div>

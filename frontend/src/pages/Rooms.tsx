@@ -21,8 +21,8 @@ function StatusBadge({ status }: { status: string }) {
     <span
       className={`absolute top-3 right-3 text-xs font-medium px-2.5 py-1 rounded-md ${
         isAvailable
-          ? 'bg-green-100 text-green-700'
-          : 'bg-red-100 text-red-700'
+          ? 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400'
+          : 'bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-400'
       }`}
     >
       {isAvailable ? 'ទំនេរ' : 'មានអ្នកជួល'}
@@ -42,15 +42,15 @@ function RoomCard({ room, onDelete, onEdit, onViewTenant, onUploadImage }: RoomC
   const imageUrl = getImageUrl(room.imageurl);
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden transition-all duration-200 hover:shadow-lg hover:border-blue-200 hover:-translate-y-1">
+    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-200 hover:shadow-lg hover:border-blue-200 dark:hover:border-blue-800 hover:-translate-y-1">
       <div
-        className="relative h-40 bg-gray-100 flex items-center justify-center cursor-pointer group"
+        className="relative h-40 bg-gray-100 dark:bg-gray-700 flex items-center justify-center cursor-pointer group"
         onClick={() => onUploadImage(room)}
       >
         {imageUrl ? (
           <img src={imageUrl} alt={room.roomnumber} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
         ) : (
-          <Home size={40} className="text-gray-300" strokeWidth={1.5} />
+          <Home size={40} className="text-gray-300 dark:text-gray-600" strokeWidth={1.5} />
         )}
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 flex items-center justify-center transition-colors">
           <span className="text-white text-sm opacity-0 group-hover:opacity-100 font-medium flex items-center gap-1.5">
@@ -63,29 +63,29 @@ function RoomCard({ room, onDelete, onEdit, onViewTenant, onUploadImage }: RoomC
 
       <div className="p-4">
         <div className="flex items-center justify-between mb-1">
-          <h3 className="font-semibold text-gray-800">បន្ទប់ {room.roomnumber}</h3>
-          <span className="font-semibold text-blue-600">${room.price}</span>
+          <h3 className="font-semibold text-gray-800 dark:text-white">បន្ទប់ {room.roomnumber}</h3>
+          <span className="font-semibold text-blue-600 dark:text-blue-400">${room.price}</span>
         </div>
-        <p className="text-sm text-gray-500 mb-3">{room.roomtype || 'មិនកំណត់'}</p>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">{room.roomtype || 'មិនកំណត់'}</p>
 
         <div className="flex gap-2">
           <button
             onClick={() => onEdit(room)}
-            className="flex-1 flex items-center justify-center gap-1.5 text-sm bg-amber-100 text-amber-700 py-2 rounded-lg font-medium"
+            className="flex-1 flex items-center justify-center gap-1.5 text-sm bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 py-2 rounded-lg font-medium"
           >
             <Pencil size={14} />
             កែប្រែ
           </button>
           <button
             onClick={() => onViewTenant(room)}
-            className="flex-1 flex items-center justify-center gap-1.5 text-sm bg-blue-100 text-blue-700 py-2 rounded-lg font-medium"
+            className="flex-1 flex items-center justify-center gap-1.5 text-sm bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 py-2 rounded-lg font-medium"
           >
             <Users size={14} />
             អ្នកជួល
           </button>
           <button
             onClick={() => onDelete(room.roomid)}
-            className="text-sm bg-red-100 text-red-700 px-3 py-2 rounded-lg font-medium"
+            className="text-sm bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-400 px-3 py-2 rounded-lg font-medium"
           >
             <Trash2 size={14} />
           </button>
@@ -207,8 +207,8 @@ function Rooms() {
 
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-800">គ្រប់គ្រងបន្ទប់</h1>
-          <p className="text-gray-500 mt-1">គ្រប់គ្រងបន្ទប់ជួលរបស់អ្នកនៅទីនេះ</p>
+          <h1 className="text-2xl font-semibold text-gray-800 dark:text-white">គ្រប់គ្រងបន្ទប់</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">គ្រប់គ្រងបន្ទប់ជួលរបស់អ្នកនៅទីនេះ</p>
         </div>
         <button
           onClick={openAddModal}
@@ -220,17 +220,17 @@ function Rooms() {
       </div>
 
       {loading && (
-        <p className="text-gray-500 text-center py-10">កំពុងផ្ទុកទិន្នន័យ...</p>
+        <p className="text-gray-500 dark:text-gray-400 text-center py-10">កំពុងផ្ទុកទិន្នន័យ...</p>
       )}
 
       {error && (
-        <div className="bg-red-50 text-red-700 border border-red-200 rounded-lg p-4 text-sm">
+        <div className="bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800 rounded-lg p-4 text-sm">
           {error}
         </div>
       )}
 
       {!loading && !error && rooms.length === 0 && (
-        <p className="text-gray-500 text-center py-10">មិនទាន់មានបន្ទប់នៅឡើយទេ</p>
+        <p className="text-gray-500 dark:text-gray-400 text-center py-10">មិនទាន់មានបន្ទប់នៅឡើយទេ</p>
       )}
 
       {!loading && !error && rooms.length > 0 && (

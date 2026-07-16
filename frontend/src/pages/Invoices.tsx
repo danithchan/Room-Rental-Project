@@ -18,7 +18,9 @@ function StatusBadge({ status }: { status: string }) {
   return (
     <span
       className={`text-xs font-medium px-2.5 py-1 rounded-md ${
-        isPaid ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+        isPaid
+          ? 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400'
+          : 'bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-400'
       }`}
     >
       {isPaid ? 'បានបង់' : 'ជំពាក់'}
@@ -89,8 +91,8 @@ function Invoices() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-800">វិក្កយបត្រ</h1>
-          <p className="text-gray-500 mt-1">គ្រប់គ្រងវិក្កយបត្រទឹក-ភ្លើងប្រចាំខែ</p>
+          <h1 className="text-2xl font-semibold text-gray-800 dark:text-white">វិក្កយបត្រ</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">គ្រប់គ្រងវិក្កយបត្រទឹក-ភ្លើងប្រចាំខែ</p>
         </div>
         <button
           onClick={() => setShowModal(true)}
@@ -101,10 +103,10 @@ function Invoices() {
         </button>
       </div>
 
-      {loading && <p className="text-gray-500 text-center py-10">កំពុងផ្ទុកទិន្នន័យ...</p>}
+      {loading && <p className="text-gray-500 dark:text-gray-400 text-center py-10">កំពុងផ្ទុកទិន្នន័យ...</p>}
 
       {error && (
-        <div className="bg-red-50 text-red-700 border border-red-200 rounded-lg p-4 text-sm">
+        <div className="bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800 rounded-lg p-4 text-sm">
           {error}
         </div>
       )}
@@ -112,52 +114,52 @@ function Invoices() {
       {!loading && !error && (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-6">
-            <div className="bg-white rounded-xl border border-gray-200 p-5">
-              <p className="text-sm text-gray-500 mb-1">វិក្កយបត្រសរុប</p>
-              <p className="text-2xl font-semibold text-gray-800">{invoices.length}</p>
+            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">វិក្កយបត្រសរុប</p>
+              <p className="text-2xl font-semibold text-gray-800 dark:text-white">{invoices.length}</p>
             </div>
-            <div className="bg-white rounded-xl border border-gray-200 p-5">
-              <p className="text-sm text-gray-500 mb-1">បានបង់</p>
-              <p className="text-2xl font-semibold text-green-600">${totalPaid.toFixed(2)}</p>
+            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">បានបង់</p>
+              <p className="text-2xl font-semibold text-green-600 dark:text-green-400">${totalPaid.toFixed(2)}</p>
             </div>
-            <div className="bg-white rounded-xl border border-gray-200 p-5">
-              <p className="text-sm text-gray-500 mb-1">ជំពាក់</p>
-              <p className="text-2xl font-semibold text-red-600">${totalUnpaid.toFixed(2)}</p>
+            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">ជំពាក់</p>
+              <p className="text-2xl font-semibold text-red-600 dark:text-red-400">${totalUnpaid.toFixed(2)}</p>
             </div>
           </div>
 
           {invoices.length === 0 ? (
-            <p className="text-gray-500 text-center py-10">មិនទាន់មានវិក្កយបត្រនៅឡើយទេ</p>
+            <p className="text-gray-500 dark:text-gray-400 text-center py-10">មិនទាន់មានវិក្កយបត្រនៅឡើយទេ</p>
           ) : (
-            <div className="bg-white rounded-xl border border-gray-200 overflow-hidden overflow-x-auto">
+            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-gray-50 border-b border-gray-200">
-                    <th className="text-left px-5 py-3 font-medium text-gray-500">អ្នកជួល</th>
-                    <th className="text-left px-5 py-3 font-medium text-gray-500">បន្ទប់</th>
-                    <th className="text-left px-5 py-3 font-medium text-gray-500">ថ្ងៃខែ</th>
-                    <th className="text-left px-5 py-3 font-medium text-gray-500">ទឹក (Unit)</th>
-                    <th className="text-left px-5 py-3 font-medium text-gray-500">ភ្លើង (Unit)</th>
-                    <th className="text-left px-5 py-3 font-medium text-gray-500">សរុប</th>
-                    <th className="text-left px-5 py-3 font-medium text-gray-500">ស្ថានភាព</th>
-                    <th className="text-left px-5 py-3 font-medium text-gray-500">សកម្មភាព</th>
+                  <tr className="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                    <th className="text-left px-5 py-3 font-medium text-gray-500 dark:text-gray-400">អ្នកជួល</th>
+                    <th className="text-left px-5 py-3 font-medium text-gray-500 dark:text-gray-400">បន្ទប់</th>
+                    <th className="text-left px-5 py-3 font-medium text-gray-500 dark:text-gray-400">ថ្ងៃខែ</th>
+                    <th className="text-left px-5 py-3 font-medium text-gray-500 dark:text-gray-400">ទឹក (Unit)</th>
+                    <th className="text-left px-5 py-3 font-medium text-gray-500 dark:text-gray-400">ភ្លើង (Unit)</th>
+                    <th className="text-left px-5 py-3 font-medium text-gray-500 dark:text-gray-400">សរុប</th>
+                    <th className="text-left px-5 py-3 font-medium text-gray-500 dark:text-gray-400">ស្ថានភាព</th>
+                    <th className="text-left px-5 py-3 font-medium text-gray-500 dark:text-gray-400">សកម្មភាព</th>
                   </tr>
                 </thead>
                 <tbody>
                   {invoices.map((inv) => (
-                    <tr key={inv.invoiceid} className="border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
-                      <td className="px-5 py-3.5 font-medium text-gray-800">{inv.tenantname}</td>
-                      <td className="px-5 py-3.5 text-gray-600">{inv.roomnumber}</td>
-                      <td className="px-5 py-3.5 text-gray-600">
+                    <tr key={inv.invoiceid} className="border-b border-gray-100 dark:border-gray-700 last:border-0 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                      <td className="px-5 py-3.5 font-medium text-gray-800 dark:text-white">{inv.tenantname}</td>
+                      <td className="px-5 py-3.5 text-gray-600 dark:text-gray-300">{inv.roomnumber}</td>
+                      <td className="px-5 py-3.5 text-gray-600 dark:text-gray-300">
                         {new Date(inv.invoicedate).toLocaleDateString('en-GB')}
                       </td>
-                      <td className="px-5 py-3.5 text-gray-600">
+                      <td className="px-5 py-3.5 text-gray-600 dark:text-gray-300">
                         {inv.newwatermeter - inv.oldwatermeter}
                       </td>
-                      <td className="px-5 py-3.5 text-gray-600">
+                      <td className="px-5 py-3.5 text-gray-600 dark:text-gray-300">
                         {inv.newelectricmeter - inv.oldelectricmeter}
                       </td>
-                      <td className="px-5 py-3.5 font-medium text-gray-800">${inv.totalamount}</td>
+                      <td className="px-5 py-3.5 font-medium text-gray-800 dark:text-white">${inv.totalamount}</td>
                       <td className="px-5 py-3.5">
                         <StatusBadge status={inv.paymentstatus} />
                       </td>
@@ -166,7 +168,7 @@ function Invoices() {
                           {inv.paymentstatus === 'Unpaid' && (
                             <button
                               onClick={() => handleMarkPaid(inv.invoiceid)}
-                              className="flex items-center gap-1 text-xs bg-green-100 text-green-700 px-3 py-1.5 rounded-md font-medium"
+                              className="flex items-center gap-1 text-xs bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 px-3 py-1.5 rounded-md font-medium"
                             >
                               <CheckCircle2 size={13} />
                               បានបង់
@@ -174,7 +176,7 @@ function Invoices() {
                           )}
                           <button
                             onClick={() => handleDelete(inv.invoiceid)}
-                            className="flex items-center gap-1 text-xs bg-red-100 text-red-700 px-3 py-1.5 rounded-md font-medium"
+                            className="flex items-center gap-1 text-xs bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-400 px-3 py-1.5 rounded-md font-medium"
                           >
                             <Trash2 size={13} />
                             លុប
@@ -188,7 +190,7 @@ function Invoices() {
             </div>
           )}
 
-          <p className="text-xs text-gray-400 mt-3">
+          <p className="text-xs text-gray-400 dark:text-gray-500 mt-3">
             * តម្លៃទឹក ${WATER_PRICE}/Unit · តម្លៃភ្លើង ${ELECTRIC_PRICE}/Unit
           </p>
         </>

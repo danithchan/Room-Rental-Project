@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getCurrentAdmin } from "../../services/authService";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 const ProfileForm = () => {
   const admin = getCurrentAdmin();
   const ADMIN_ID = admin?.adminid;
@@ -11,7 +13,7 @@ const ProfileForm = () => {
 
   useEffect(() => {
     if (!ADMIN_ID) return;
-    fetch(`http://localhost:3000/api/admin/${ADMIN_ID}`)
+    fetch(`${API_BASE_URL}/api/admin/${ADMIN_ID}`)
       .then((r) => r.json())
       .then((data) =>
         setForm({
@@ -29,7 +31,7 @@ const ProfileForm = () => {
     setMessage("");
     try {
       const token = localStorage.getItem("ssrms_token") || "";
-      const res = await fetch(`http://localhost:3000/api/admin/${ADMIN_ID}`, {
+      const res = await fetch(`${API_BASE_URL}/api/admin/${ADMIN_ID}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", Authorization: token },
         body: JSON.stringify({ fullname: form.fullname, phone: form.phone }),
@@ -48,40 +50,40 @@ const ProfileForm = () => {
   };
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-      <h2 className="mb-6 text-xl font-semibold text-gray-800">Personal Information</h2>
+    <div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm">
+      <h2 className="mb-6 text-xl font-semibold text-gray-800 dark:text-white">Personal Information</h2>
       <form className="space-y-5" onSubmit={handleSubmit}>
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700">Full Name</label>
+          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">Full Name</label>
           <input
             type="text"
             placeholder="Full Name"
             value={form.fullname}
             onChange={(e) => setForm({ ...form, fullname: e.target.value })}
-            className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-pink-500"
+            className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white px-4 py-2.5 outline-none focus:border-pink-500"
           />
         </div>
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700">Username</label>
+          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">Username</label>
           <input
             type="text"
             placeholder="Username"
             value={form.username}
             disabled
-            className="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-gray-400 outline-none"
+            className="w-full rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 px-4 py-2.5 text-gray-400 dark:text-gray-500 outline-none"
           />
         </div>
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700">Phone Number</label>
+          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">Phone Number</label>
           <input
             type="text"
             placeholder="Phone Number"
             value={form.phone}
             onChange={(e) => setForm({ ...form, phone: e.target.value })}
-            className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-pink-500"
+            className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white px-4 py-2.5 outline-none focus:border-pink-500"
           />
         </div>
-        {message && <p className="text-sm text-green-600">{message}</p>}
+        {message && <p className="text-sm text-green-600 dark:text-green-400">{message}</p>}
         <div className="flex justify-end">
           <button
             type="submit"

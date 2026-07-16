@@ -19,7 +19,6 @@ function RoomFormModal({ room, onClose, onSubmit, onMoveIn }: RoomFormModalProps
     status: room?.status || 'Available',
   });
 
-  // Field បន្ថែម សម្រាប់ករណី "មានអ្នកជួល" (Tenant ថ្មី)
   const [tenantName, setTenantName] = useState('');
   const [tenantPhone, setTenantPhone] = useState('');
   const [deposit, setDeposit] = useState(0);
@@ -30,7 +29,6 @@ function RoomFormModal({ room, onClose, onSubmit, onMoveIn }: RoomFormModalProps
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // បង្ហាញ Field Tenant តែពេល: ជ្រើស "Occupied" ហើយ Room ពីដើមមិនមែន Occupied រួចហើយ
   const showTenantFields =
     formData.status === 'Occupied' && !wasOccupiedBefore;
 
@@ -72,7 +70,6 @@ function RoomFormModal({ room, onClose, onSubmit, onMoveIn }: RoomFormModalProps
       setError(null);
 
       if (showTenantFields) {
-        // ករណីបញ្ចូលអ្នកជួលថ្មី → ប្រើ Move-in API
         await onMoveIn({
           roomnumber: formData.roomnumber,
           roomtype: formData.roomtype,
@@ -83,7 +80,6 @@ function RoomFormModal({ room, onClose, onSubmit, onMoveIn }: RoomFormModalProps
           startdate: startDate,
         });
       } else {
-        // ករណីធម្មតា (Add/Edit Room ដោយមិនប៉ះ Tenant)
         await onSubmit(formData);
       }
 
@@ -108,7 +104,7 @@ function RoomFormModal({ room, onClose, onSubmit, onMoveIn }: RoomFormModalProps
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-5">
-          <h2 className="text-lg font-semibold text-gray-800">
+          <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-900">
             {isEditMode ? 'កែប្រែបន្ទប់' : 'បន្ថែមបន្ទប់ថ្មី'}
           </h2>
           <button
@@ -136,7 +132,7 @@ function RoomFormModal({ room, onClose, onSubmit, onMoveIn }: RoomFormModalProps
               value={formData.roomnumber}
               onChange={handleChange}
               placeholder="ឧ. B04"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -148,7 +144,7 @@ function RoomFormModal({ room, onClose, onSubmit, onMoveIn }: RoomFormModalProps
               name="roomtype"
               value={formData.roomtype}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="Standard">ធម្មតា (Standard)</option>
               <option value="VIP">VIP</option>
@@ -168,7 +164,7 @@ function RoomFormModal({ room, onClose, onSubmit, onMoveIn }: RoomFormModalProps
               placeholder="80"
               min="0"
               step="0.01"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -180,14 +176,13 @@ function RoomFormModal({ room, onClose, onSubmit, onMoveIn }: RoomFormModalProps
               name="status"
               value={formData.status}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="Available">ទំនេរ</option>
               <option value="Occupied">មានអ្នកជួល</option>
             </select>
           </div>
 
-          {/* Field បន្ថែម — លេចឡើងតែពេលជ្រើស "មានអ្នកជួល" លើបន្ទប់ដែលនៅទំនេរ */}
           {showTenantFields && (
             <div className="border border-blue-200 bg-blue-50 rounded-lg p-4 space-y-3">
               <p className="text-sm font-medium text-blue-700">
@@ -203,7 +198,7 @@ function RoomFormModal({ room, onClose, onSubmit, onMoveIn }: RoomFormModalProps
                   value={tenantName}
                   onChange={(e) => setTenantName(e.target.value)}
                   placeholder="ឧ. ចាន់ ដារ៉ា"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
@@ -216,7 +211,7 @@ function RoomFormModal({ room, onClose, onSubmit, onMoveIn }: RoomFormModalProps
                   value={tenantPhone}
                   onChange={(e) => setTenantPhone(e.target.value)}
                   placeholder="012 345 678"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
@@ -230,7 +225,7 @@ function RoomFormModal({ room, onClose, onSubmit, onMoveIn }: RoomFormModalProps
                   onChange={(e) => setDeposit(Number(e.target.value))}
                   placeholder="0"
                   min="0"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
@@ -242,7 +237,7 @@ function RoomFormModal({ room, onClose, onSubmit, onMoveIn }: RoomFormModalProps
                   type="date"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             </div>

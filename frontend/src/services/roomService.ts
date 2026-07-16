@@ -25,8 +25,7 @@ export interface MoveInInput {
   deposit: number;
   startdate: string;
 }
-
-const BACKEND_URL = 'http://localhost:3000';
+const BACKEND_URL = import.meta.env.VITE_API_URL;
 export const getImageUrl = (imageurl: string | null): string | null => {
   if (!imageurl) return null;
   return `${BACKEND_URL}${imageurl}`;

@@ -14,9 +14,9 @@ function formatDate(dateStr: string | null) {
 
 function StatusBadge({ status }: { status: string }) {
   const config: Record<string, { label: string; className: string }> = {
-    Active: { label: 'កំពុងដំណើរការ', className: 'bg-green-100 text-green-700' },
-    Expiring: { label: 'ជិតផុតកំណត់', className: 'bg-amber-100 text-amber-700' },
-    Ended: { label: 'ផុតកំណត់', className: 'bg-gray-100 text-gray-600' },
+    Active: { label: 'កំពុងដំណើរការ', className: 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400' },
+    Expiring: { label: 'ជិតផុតកំណត់', className: 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400' },
+    Ended: { label: 'ផុតកំណត់', className: 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300' },
   };
   const { label, className } = config[status] || config.Ended;
   return (
@@ -82,45 +82,45 @@ function Contracts() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-800">កិច្ចសន្យាជួល</h1>
-          <p className="text-gray-500 mt-1">គ្រប់គ្រងកិច្ចសន្យាជួលរបស់អ្នកនៅទីនេះ</p>
+          <h1 className="text-2xl font-semibold text-gray-800 dark:text-white">កិច្ចសន្យាជួល</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">គ្រប់គ្រងកិច្ចសន្យាជួលរបស់អ្នកនៅទីនេះ</p>
         </div>
       </div>
 
-      {loading && <p className="text-gray-500 text-center py-10">កំពុងផ្ទុកទិន្នន័យ...</p>}
+      {loading && <p className="text-gray-500 dark:text-gray-400 text-center py-10">កំពុងផ្ទុកទិន្នន័យ...</p>}
 
       {error && (
-        <div className="bg-red-50 text-red-700 border border-red-200 rounded-lg p-4 text-sm">
+        <div className="bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800 rounded-lg p-4 text-sm">
           {error}
         </div>
       )}
 
       {!loading && !error && contracts.length === 0 && (
-        <p className="text-gray-500 text-center py-10">មិនទាន់មានកិច្ចសន្យានៅឡើយទេ</p>
+        <p className="text-gray-500 dark:text-gray-400 text-center py-10">មិនទាន់មានកិច្ចសន្យានៅឡើយទេ</p>
       )}
 
       {!loading && !error && contracts.length > 0 && (
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden overflow-x-auto">
+        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-gray-50 border-b border-gray-200">
-                <th className="text-left px-5 py-3 font-medium text-gray-500">អ្នកជួល</th>
-                <th className="text-left px-5 py-3 font-medium text-gray-500">បន្ទប់</th>
-                <th className="text-left px-5 py-3 font-medium text-gray-500">ថ្ងៃចាប់ផ្តើម</th>
-                <th className="text-left px-5 py-3 font-medium text-gray-500">ថ្ងៃបញ្ចប់</th>
-                <th className="text-left px-5 py-3 font-medium text-gray-500">ប្រាក់កក់</th>
-                <th className="text-left px-5 py-3 font-medium text-gray-500">ស្ថានភាព</th>
-                <th className="text-left px-5 py-3 font-medium text-gray-500">សកម្មភាព</th>
+              <tr className="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                <th className="text-left px-5 py-3 font-medium text-gray-500 dark:text-gray-400">អ្នកជួល</th>
+                <th className="text-left px-5 py-3 font-medium text-gray-500 dark:text-gray-400">បន្ទប់</th>
+                <th className="text-left px-5 py-3 font-medium text-gray-500 dark:text-gray-400">ថ្ងៃចាប់ផ្តើម</th>
+                <th className="text-left px-5 py-3 font-medium text-gray-500 dark:text-gray-400">ថ្ងៃបញ្ចប់</th>
+                <th className="text-left px-5 py-3 font-medium text-gray-500 dark:text-gray-400">ប្រាក់កក់</th>
+                <th className="text-left px-5 py-3 font-medium text-gray-500 dark:text-gray-400">ស្ថានភាព</th>
+                <th className="text-left px-5 py-3 font-medium text-gray-500 dark:text-gray-400">សកម្មភាព</th>
               </tr>
             </thead>
             <tbody>
               {contracts.map((c) => (
-                <tr key={c.contractid} className="border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
-                  <td className="px-5 py-3.5 font-medium text-gray-800">{c.tenantname}</td>
-                  <td className="px-5 py-3.5 text-gray-600">{c.roomnumber}</td>
-                  <td className="px-5 py-3.5 text-gray-600">{formatDate(c.startdate)}</td>
-                  <td className="px-5 py-3.5 text-gray-600">{formatDate(c.enddate)}</td>
-                  <td className="px-5 py-3.5 text-gray-600">${c.deposit}</td>
+                <tr key={c.contractid} className="border-b border-gray-100 dark:border-gray-700 last:border-0 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                  <td className="px-5 py-3.5 font-medium text-gray-800 dark:text-white">{c.tenantname}</td>
+                  <td className="px-5 py-3.5 text-gray-600 dark:text-gray-300">{c.roomnumber}</td>
+                  <td className="px-5 py-3.5 text-gray-600 dark:text-gray-300">{formatDate(c.startdate)}</td>
+                  <td className="px-5 py-3.5 text-gray-600 dark:text-gray-300">{formatDate(c.enddate)}</td>
+                  <td className="px-5 py-3.5 text-gray-600 dark:text-gray-300">${c.deposit}</td>
                   <td className="px-5 py-3.5">
                     <StatusBadge status={c.status} />
                   </td>
@@ -129,7 +129,7 @@ function Contracts() {
                       {c.status === 'Active' && (
                         <button
                           onClick={() => handleEnd(c)}
-                          className="flex items-center gap-1 text-xs bg-amber-100 text-amber-700 px-3 py-1.5 rounded-md font-medium"
+                          className="flex items-center gap-1 text-xs bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 px-3 py-1.5 rounded-md font-medium"
                         >
                           <CheckCircle2 size={13} />
                           បញ្ចប់
@@ -137,7 +137,7 @@ function Contracts() {
                       )}
                       <button
                         onClick={() => handleDelete(c.contractid)}
-                        className="flex items-center gap-1 text-xs bg-red-100 text-red-700 px-3 py-1.5 rounded-md font-medium"
+                        className="flex items-center gap-1 text-xs bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-400 px-3 py-1.5 rounded-md font-medium"
                       >
                         <Trash2 size={13} />
                         លុប

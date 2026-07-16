@@ -12,9 +12,9 @@ import MaintenanceFormModal from '../components/MaintenanceFormModal';
 
 function StatusBadge({ status }: { status: string }) {
   const config: Record<string, { label: string; className: string }> = {
-    Pending: { label: 'កំពុងរង់ចាំ', className: 'bg-gray-100 text-gray-600' },
-    InProgress: { label: 'កំពុងជួសជុល', className: 'bg-amber-100 text-amber-700' },
-    Done: { label: 'រួចរាល់', className: 'bg-green-100 text-green-700' },
+    Pending: { label: 'កំពុងរង់ចាំ', className: 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300' },
+    InProgress: { label: 'កំពុងជួសជុល', className: 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400' },
+    Done: { label: 'រួចរាល់', className: 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400' },
   };
   const { label, className } = config[status] || config.Pending;
   return (
@@ -32,16 +32,16 @@ interface MaintenanceCardProps {
 
 function MaintenanceCard({ item, onStatusChange, onDelete }: MaintenanceCardProps) {
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-5 transition-all duration-200 hover:shadow-lg hover:border-blue-200 hover:-translate-y-1">
+    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 transition-all duration-200 hover:shadow-lg hover:border-blue-200 dark:hover:border-blue-800 hover:-translate-y-1">
       <div className="flex items-start justify-between mb-3">
         <div>
-          <h3 className="font-semibold text-gray-800">បន្ទប់ {item.roomnumber}</h3>
-          <p className="text-sm text-gray-500 mt-0.5">{item.description}</p>
+          <h3 className="font-semibold text-gray-800 dark:text-white">បន្ទប់ {item.roomnumber}</h3>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">{item.description}</p>
         </div>
         <StatusBadge status={item.status} />
       </div>
 
-      <div className="flex items-center justify-between text-sm text-gray-500 pt-3 border-t border-gray-100">
+      <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 pt-3 border-t border-gray-100 dark:border-gray-700">
         <span className="flex items-center gap-1.5">
           <Calendar size={14} />
           {new Date(item.reportdate).toLocaleDateString('en-GB')}
@@ -61,14 +61,14 @@ function MaintenanceCard({ item, onStatusChange, onDelete }: MaintenanceCardProp
                 item.status === 'Pending' ? 'InProgress' : 'Done'
               )
             }
-            className="flex-1 text-sm bg-amber-100 text-amber-700 py-2 rounded-lg font-medium"
+            className="flex-1 text-sm bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 py-2 rounded-lg font-medium"
           >
             {item.status === 'Pending' ? 'ចាប់ផ្តើមជួសជុល' : 'បានជួសជុលរួច'}
           </button>
         )}
         <button
           onClick={() => onDelete(item.maintenanceid)}
-          className="text-sm bg-red-100 text-red-700 px-3 py-2 rounded-lg font-medium"
+          className="text-sm bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-400 px-3 py-2 rounded-lg font-medium"
         >
           <Trash2 size={14} />
         </button>
@@ -135,8 +135,8 @@ export function Maintenance() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-800">ការជួសជុល</h1>
-          <p className="text-gray-500 mt-1">
+          <h1 className="text-2xl font-semibold text-gray-800 dark:text-white">ការជួសជុល</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">
             {loading ? 'កំពុងផ្ទុកទិន្នន័យ...' : `មាន ${pendingCount} ការជួសជុលកំពុងរង់ចាំ ឬកំពុងដំណើរការ`}
           </p>
         </div>
@@ -149,16 +149,16 @@ export function Maintenance() {
         </button>
       </div>
 
-      {loading && <p className="text-gray-500 text-center py-10">កំពុងផ្ទុកទិន្នន័យ...</p>}
+      {loading && <p className="text-gray-500 dark:text-gray-400 text-center py-10">កំពុងផ្ទុកទិន្នន័យ...</p>}
 
       {error && (
-        <div className="bg-red-50 text-red-700 border border-red-200 rounded-lg p-4 text-sm">
+        <div className="bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800 rounded-lg p-4 text-sm">
           {error}
         </div>
       )}
 
       {!loading && !error && items.length === 0 && (
-        <p className="text-gray-500 text-center py-10">មិនទាន់មានការជួសជុលនៅឡើយទេ</p>
+        <p className="text-gray-500 dark:text-gray-400 text-center py-10">មិនទាន់មានការជួសជុលនៅឡើយទេ</p>
       )}
 
       {!loading && !error && items.length > 0 && (
