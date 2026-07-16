@@ -94,7 +94,7 @@ function Invoices() {
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="flex items-center gap-1.5 bg-blue-600 text-white px-4 py-2.5 rounded-lg text-sm font-medium"
+          className="flex items-center gap-1.5 bg-pink-600 text-white px-4 py-2.5 rounded-lg text-sm font-medium"
         >
           <Plus size={16} />
           បង្កើតវិក្កយបត្រថ្មី

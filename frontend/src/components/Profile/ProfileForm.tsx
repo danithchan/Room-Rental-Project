@@ -58,7 +58,7 @@ const ProfileForm = () => {
             placeholder="Full Name"
             value={form.fullname}
             onChange={(e) => setForm({ ...form, fullname: e.target.value })}
-            className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-blue-500"
+            className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-pink-500"
           />
         </div>
         <div>
@@ -78,7 +78,7 @@ const ProfileForm = () => {
             placeholder="Phone Number"
             value={form.phone}
             onChange={(e) => setForm({ ...form, phone: e.target.value })}
-            className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-blue-500"
+            className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-pink-500"
           />
         </div>
         {message && <p className="text-sm text-green-600">{message}</p>}
@@ -86,7 +86,7 @@ const ProfileForm = () => {
           <button
             type="submit"
             disabled={loading}
-            className="rounded-lg bg-blue-600 px-6 py-2.5 font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+            className="rounded-lg bg-pink-400 px-6 py-2.5 font-medium text-white hover:bg-pink-500 disabled:opacity-50"
           >
             {loading ? "Saving..." : "Save Changes"}
           </button>

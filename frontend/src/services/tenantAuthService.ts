@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://room-rental-project.onrender.com';
+const API_BASE_URL = 'http://localhost:3000/api/tenant-auth';
 const TENANT_KEY = 'ssrms_tenant';
 const TENANT_TOKEN_KEY = 'ssrms_tenant_token';
 

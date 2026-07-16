@@ -196,8 +196,6 @@ function Dashboard() {
   }
 
   const availableRooms = rooms.filter((r) => r.status === 'Available').length;
-
-  // ចំណូលខែនេះ — បូក Invoice ដែលជា Invoice Date ក្នុងខែបច្ចុប្បន្ន
   const now = new Date();
   const thisMonthRevenue = invoices
     .filter((inv) => {
@@ -213,7 +211,6 @@ function Dashboard() {
     { label: 'ចំណូលខែនេះ', value: `$${thisMonthRevenue.toFixed(2)}`, icon: '💰', color: 'bg-amber-50 text-amber-600' },
   ];
 
-  // យក Invoice/Maintenance ៣ ចុងក្រោយ
   const recentInvoices = [...invoices]
     .sort((a, b) => new Date(b.invoicedate).getTime() - new Date(a.invoicedate).getTime())
     .slice(0, 3);

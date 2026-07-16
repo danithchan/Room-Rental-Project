@@ -96,27 +96,27 @@ router.post('/forgot-password', async (req, res) => {
       }
     });
 
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'email_របស់បង@gmail.com',
-        pass: 'កូដ១៦ខ្ទង់ដែលទើបបង្កើតថ្មី'
-      }
-    });
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 
-    const resetLink = `http://localhost:5173/reset-password?token=${token}`;
+const resetLink = `http://localhost:5173/reset-password?token=${token}`;
 
-    const mailOptions = {
-      from: 'email_របស់បង@gmail.com',
-      to: admin.username,
-      subject: 'ការស្នើសុំផ្លាស់ប្តូរពាក្យសម្ងាត់ថ្មី (Reset Password)',
-      html: `
-        <h3>សួស្តីបាទ ${admin.fullname}!</h3>
-        <p>អ្នកបានស្នើសុំប្តូរពាក្យសម្ងាត់ថ្មី។ សូមចុចលើតំណភ្ជាប់ខាងក្រោមដើម្បីកំណត់ពាក្យសម្ងាត់ថ្មី៖</p>
-        <a href="${resetLink}" style="background: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; display: inline-block; border-radius: 5px;">ប្តូរពាក្យសម្ងាត់ទីនេះ</a>
-        <p style="color: red; margin-top: 15px;">*ចំណាំ៖ តំណភ្ជាប់នេះមានសុពលភាពតែ ១៥ នាទីប៉ុណ្ណោះ។*</p>
-      `
-    };
+const mailOptions = {
+  from: process.env.EMAIL_USER,
+  to: admin.username,
+  subject: 'ការស្នើសុំផ្លាស់ប្តូរពាក្យសម្ងាត់ថ្មី (Reset Password)',
+  html: `
+    <h3>សួស្តីបាទ ${admin.fullname}!</h3>
+    <p>អ្នកបានស្នើសុំប្តូរពាក្យសម្ងាត់ថ្មី។ សូមចុចលើតំណភ្ជាប់ខាងក្រោមដើម្បីកំណត់ពាក្យសម្ងាត់ថ្មី៖</p>
+    <a href="${resetLink}" style="background: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; display: inline-block; border-radius: 5px;">ប្តូរពាក្យសម្ងាត់ទីនេះ</a>
+    <p style="color: red; margin-top: 15px;">*ចំណាំ៖ តំណភ្ជាប់នេះមានសុពលភាពតែ ១៥ នាទីប៉ុណ្ណោះ។*</p>
+  `
+};
 
     await transporter.sendMail(mailOptions);
     res.json({ message: 'តំណភ្ជាប់សម្រាប់ប្តូរពាក្យសម្ងាត់ ត្រូវបានផ្ញើទៅកាន់អ៊ីមែលរបស់អ្នកហើយ។' });
@@ -180,6 +180,8 @@ router.post('/:id/upload-avatar', authMiddleware, upload.single('avatar'), async
     res.status(500).json({ error: err.message });
   }
 });
+
+
 router.put('/:id/change-password', authMiddleware, async (req, res) => {
   const { oldPassword, newPassword } = req.body;
   try {

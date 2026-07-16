@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -13,7 +14,6 @@ const tenantAuthRoutes = require('./routes/tenantAuth');
 const contractRoutes = require('./routes/contracts');
 const invoiceRoutes = require('./routes/invoices');
 const maintenanceRoutes = require('./routes/maintenance');
-// const profileRoutes = require("./routes/profile");
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/admin', adminRoutes);
@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
   res.json({ message: 'Room Rental API is running!' });
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

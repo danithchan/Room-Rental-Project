@@ -60,12 +60,12 @@ const AvatarCard = () => {
     <div className="rounded-2xl border bg-white p-6 shadow-sm">
       <div className="flex flex-col items-center">
         {fetching ? (
-          <div className="h-32 w-32 rounded-full border-4 border-blue-500 bg-gray-100 animate-pulse" />
+          <div className="h-32 w-32 rounded-full border-4 border-pink-500 bg-gray-100 animate-pulse" />
         ) : (
           <img
             src={avatarSrc}
             alt="Profile"
-            className="h-32 w-32 rounded-full border-4 border-blue-500 object-cover"
+            className="h-32 w-32 rounded-full border-4 border-pink-400 object-cover"
           />
         )}
         <h2 className="mt-4 text-xl font-semibold">
@@ -76,7 +76,7 @@ const AvatarCard = () => {
         <button
           onClick={() => fileRef.current?.click()}
           disabled={loading || fetching}
-          className="mt-6 w-full rounded-lg bg-blue-600 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
+          className="mt-6 w-full rounded-lg bg-pink-400 py-2 text-white hover:bg-pink-500 disabled:opacity-50"
         >
           {loading ? "Uploading..." : "Upload New Photo"}
         </button>

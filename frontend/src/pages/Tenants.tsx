@@ -146,7 +146,7 @@ function Tenants() {
         </div>
         <button
           onClick={openAddModal}
-          className="flex items-center gap-1.5 bg-blue-600 text-white px-4 py-2.5 rounded-lg text-sm font-medium"
+          className="flex items-center gap-1.5 bg-pink-600 text-white px-4 py-2.5 rounded-lg text-sm font-medium"
         >
           <Plus size={16} />
           បន្ថែមអ្នកជួលថ្មី

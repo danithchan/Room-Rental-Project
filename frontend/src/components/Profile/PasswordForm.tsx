@@ -60,7 +60,7 @@ const PasswordForm = () => {
               type="password"
               value={form[field as keyof typeof form]}
               onChange={(e) => setForm({ ...form, [field]: e.target.value })}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:border-blue-500 outline-none"
+              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:border-pink-500 outline-none"
             />
           </div>
         ))}
@@ -75,7 +75,7 @@ const PasswordForm = () => {
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className="rounded-lg bg-blue-600 px-6 py-2.5 text-white hover:bg-blue-700 disabled:opacity-50"
+            className="rounded-lg bg-pink-400 px-6 py-2.5 text-white hover:bg-pink-500 disabled:opacity-50"
           >
             {loading ? "Updating..." : "Update Password"}
           </button>

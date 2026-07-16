@@ -31,13 +31,13 @@ const financeItems: NavItem[] = [
 
 const settingsItems: NavItem[] = [
   { name: 'កិច្ចសន្យា', path: '/contracts', icon: <FileText size={18} /> },
-    { name: 'ប្រវត្តិរូប', path: '/profile', icon: <User size={18} /> },
+  { name: 'ប្រវត្តិរូប', path: '/profile', icon: <User size={18} /> },
 ];
 
 function NavSection({ title, items }: { title: string; items: NavItem[] }) {
   return (
     <div className="mb-6">
-      <p className="px-3 mb-2 text-xs font-medium text-gray-400 uppercase tracking-wider">
+      <p className="px-3 mb-2 text-xs font-medium text-gray-500 uppercase tracking-wider">
         {title}
       </p>
       <div className="space-y-1">
@@ -48,8 +48,8 @@ function NavSection({ title, items }: { title: string; items: NavItem[] }) {
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                 isActive
-                  ? 'bg-blue-600 text-white'
-                  : 'text-gray-300 hover:bg-slate-700'
+                  ? 'bg-pink-400 text-white'
+                  : 'text-black hover:bg-pink-200'
               }`
             }
           >
@@ -73,14 +73,14 @@ function Sidebar() {
   };
 
   return (
-    <aside className="w-64 h-screen bg-slate-800 flex flex-col">
+    <aside className="w-64 h-screen bg-pink-100 border-r border-pink-100 flex flex-col text-black">
       <div className="px-6 py-5 flex items-center gap-3">
-        <div className="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center text-white">
+        <div className="w-9 h-9 rounded-lg bg-pink-400 flex items-center justify-center text-white">
           <Home size={20} />
         </div>
         <div>
-          <p className="text-white font-semibold text-sm">RoomRent Manager</p>
-          <p className="text-gray-400 text-xs">Admin Panel</p>
+          <p className="text-black font-semibold text-sm">RoomRent Manager</p>
+          <p className="text-gray-600 text-xs">Admin Panel</p>
         </div>
       </div>
 
@@ -90,23 +90,23 @@ function Sidebar() {
         <NavSection title="ផ្សេងៗ" items={settingsItems} />
       </nav>
 
-      <div className="px-6 py-4 border-t border-slate-700">
+      <div className="px-6 py-4 border-t border-pink-100">
         <div className="flex items-center gap-3 mb-3">
-          <div className="w-9 h-9 rounded-full bg-blue-500 flex items-center justify-center text-white font-medium text-sm">
+          <div className="w-9 h-9 rounded-full bg-pink-300 flex items-center justify-center text-white font-medium text-sm">
             {admin?.fullname?.[0] || 'A'}
           </div>
           <div className="overflow-hidden">
-            <p className="text-sm font-medium text-white truncate">
+            <p className="text-sm font-medium text-black truncate">
               {admin?.fullname || 'Admin'}
             </p>
-            <p className="text-xs text-gray-400 truncate">
+            <p className="text-xs text-gray-600 truncate">
               {admin?.username || '-'}
             </p>
           </div>
         </div>
         <button
           onClick={handleLogout}
-          className="w-full flex items-center justify-center gap-2 text-sm bg-slate-700 hover:bg-slate-600 text-gray-300 py-2 rounded-lg font-medium"
+          className="w-full flex items-center justify-center gap-2 text-sm bg-pink-200 hover:bg-pink-300 text-black py-2 rounded-lg font-medium transition-colors"
         >
           <LogOut size={16} />
           ចាកចេញ
