@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Pencil, Users, Trash2, Camera, Home, Plus } from 'lucide-react';
 import {
   getRooms,
@@ -14,6 +14,7 @@ import {
 } from '../services/roomService';
 import RoomFormModal from '../components/RoomFormModal';
 import RoomTenantModal from '../components/RoomTenantModal';
+import { useAutoRefresh } from '../hooks/useAutoRefresh';
 
 function StatusBadge({ status }: { status: string }) {
   const isAvailable = status === 'Available';
@@ -110,7 +111,6 @@ function Rooms() {
 
   const loadRooms = async () => {
     try {
-      setLoading(true);
       setError(null);
       const data = await getRooms();
       setRooms(data);
@@ -122,9 +122,7 @@ function Rooms() {
     }
   };
 
-  useEffect(() => {
-    loadRooms();
-  }, []);
+  useAutoRefresh(loadRooms, 15000);
 
   const handleDelete = async (id: number) => {
     if (!confirm('តើអ្នកប្រាកដជាចង់លុបបន្ទប់នេះមែនទេ?')) return;

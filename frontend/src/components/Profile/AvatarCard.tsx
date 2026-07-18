@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { getCurrentAdmin } from "../../services/authService";
-
-const API_BASE_URL = import.meta.env.VITE_API_URL;
+import api from "../../services/api";
+import { getCurrentAdmin, getAvatarUrl } from "../../services/authService";
 
 const AvatarCard = () => {
   const admin = getCurrentAdmin();
@@ -15,13 +14,11 @@ const AvatarCard = () => {
 
   useEffect(() => {
     if (!ADMIN_ID) return;
-    fetch(`${API_BASE_URL}/api/admin/${ADMIN_ID}`)
-      .then((r) => r.json())
-      .then((data) => {
+    api
+      .get(`/admin/${ADMIN_ID}`)
+      .then(({ data }) => {
         setFullname(data.fullname || "Admin");
-        if (data.avatarurl) {
-          setAvatarUrl(`${API_BASE_URL}${data.avatarurl}`);
-        }
+        setAvatarUrl(getAvatarUrl(data.avatarurl));
       })
       .catch(() => setFullname("Admin"))
       .finally(() => setFetching(false));
@@ -34,21 +31,19 @@ const AvatarCard = () => {
     formData.append("avatar", file);
     setLoading(true);
     try {
-      const token = localStorage.getItem("ssrms_token") || "";
-      const res = await fetch(
-        `${API_BASE_URL}/api/admin/${ADMIN_ID}/upload-avatar`,
-        { method: "POST", headers: { Authorization: token }, body: formData }
-      );
-      const data = await res.json();
-      if (!res.ok) {
-        alert(data.error || "Upload failed!");
-        return;
+      const { data } = await api.post(`/admin/${ADMIN_ID}/upload-avatar`, formData);
+      setAvatarUrl(getAvatarUrl(data.avatarurl));
+    } catch (err: any) {
+      // A 401/403 here is already handled globally by the api interceptor
+      // (clears the session and redirects to /login), so only show an
+      // alert for other kinds of failures.
+      const status = err?.response?.status;
+      if (status !== 401 && status !== 403) {
+        alert(err?.response?.data?.error || "Upload failed!");
       }
-      setAvatarUrl(`${API_BASE_URL}${data.avatarurl}`);
-    } catch {
-      alert("Upload failed!");
     } finally {
       setLoading(false);
+      if (fileRef.current) fileRef.current.value = "";
     }
   };
 

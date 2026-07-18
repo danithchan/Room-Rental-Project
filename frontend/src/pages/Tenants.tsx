@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Phone, IdCard, MapPin, Pencil, Trash2, Plus } from 'lucide-react';
 import {
   getTenants,
@@ -9,6 +9,7 @@ import {
   type TenantInput,
 } from '../services/tenantService';
 import TenantFormModal from '../components/TenantFormModal';
+import { useAutoRefresh } from '../hooks/useAutoRefresh';
 
 function Avatar({ name }: { name: string }) {
   const initials = name.split(' ').map((w) => w[0]).join('').slice(0, 2);
@@ -88,7 +89,6 @@ function Tenants() {
 
   const loadTenants = async () => {
     try {
-      setLoading(true);
       setError(null);
       const data = await getTenants();
       setTenants(data);
@@ -100,9 +100,7 @@ function Tenants() {
     }
   };
 
-  useEffect(() => {
-    loadTenants();
-  }, []);
+  useAutoRefresh(loadTenants, 15000);
 
   const handleDelete = async (id: number) => {
     if (!confirm('តើអ្នកប្រាកដជាចង់លុបអ្នកជួលនេះមែនទេ?')) return;

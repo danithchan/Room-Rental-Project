@@ -4,6 +4,7 @@ import { getRooms, type Room } from '../services/roomService';
 import { getTenants, type Tenant } from '../services/tenantService';
 import { getInvoices, type Invoice } from '../services/invoiceService';
 import { getMaintenance, type Maintenance } from '../services/maintenanceService';
+import { useAutoRefresh } from '../hooks/useAutoRefresh';
 
 interface StatCard {
   label: string;
@@ -161,10 +162,9 @@ function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  useAutoRefresh(() => {
     const loadDashboard = async () => {
       try {
-        setLoading(true);
         setError(null);
         const [roomsData, tenantsData, invoicesData, maintenanceData] = await Promise.all([
           getRooms(),
@@ -186,7 +186,7 @@ function Dashboard() {
     };
 
     loadDashboard();
-  }, []);
+  }, 15000);
 
   if (loading) {
     return <p className="text-gray-500 dark:text-gray-400 text-center py-10">កំពុងផ្ទុកទិន្នន័យ...</p>;
