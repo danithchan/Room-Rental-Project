@@ -2,18 +2,12 @@ const express = require('express');
 const router = express.Router();
 const prisma = require('../prismaClient');
 const multer = require('multer');
-const path = require('path');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+const { uploadBufferToCloudinary } = require('../utils/uploadToCloudinary');
 
-const storage = multer.diskStorage({
-  destination: path.join(__dirname, '../uploads'),
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
-  },
-});
-const upload = multer({ storage });
+const upload = multer({ storage: multer.memoryStorage() });
 
 const authMiddleware = (req, res, next) => {
   const token = req.headers['authorization'];
@@ -169,13 +163,16 @@ router.put('/:id', authMiddleware, async (req, res) => {
   }
 });
 router.post('/:id/upload-avatar', authMiddleware, upload.single('avatar'), async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'សូម Upload រូបភាព' });
+  }
   try {
-    const avatarPath = `/uploads/${req.file.filename}`;
+    const result = await uploadBufferToCloudinary(req.file.buffer, 'ssrms/avatars');
     const updatedAdmin = await prisma.Admin.update({
       where: { adminid: parseInt(req.params.id) },
-      data: { avatarurl: avatarPath },
+      data: { avatarurl: result.secure_url },
     });
-    res.json({ message: 'Avatar uploaded successfully', avatar: avatarPath });
+    res.json({ message: 'Avatar uploaded successfully', avatarurl: result.secure_url });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

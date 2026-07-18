@@ -23,6 +23,7 @@ const TOKEN_KEY = 'ssrms_token';
 const BACKEND_URL = import.meta.env.VITE_API_URL;
 export const getAvatarUrl = (avatarurl: string | null): string | null => {
   if (!avatarurl) return null;
+  if (avatarurl.startsWith('http://') || avatarurl.startsWith('https://')) return avatarurl;
   return `${BACKEND_URL}${avatarurl}`;
 };
 export const getToken = (): string | null => {

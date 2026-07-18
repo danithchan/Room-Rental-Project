@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Lock, Home } from 'lucide-react';
 import { login } from '../services/authService';
+import { Link } from 'react-router-dom';
+
 function Login() {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
@@ -61,7 +63,7 @@ function Login() {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="Username: @nikkie160805"
+              placeholder="Username"
               autoFocus
               className="w-full bg-black/15 text-black placeholder-black/70 rounded-xl pl-4 pr-11 py-3 text-sm outline-none focus:bg-white/25 transition-colors"
             />
@@ -76,7 +78,7 @@ function Login() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password: 160805 "
+              placeholder="Password"
               className="w-full bg-black/15 text-black placeholder-black-100/70 rounded-xl pl-4 pr-11 py-3 text-sm outline-none focus:bg-white/25 transition-colors"
             />
             <Lock
@@ -84,6 +86,18 @@ function Login() {
               className="absolute right-4 top-1/2 -translate-y-1/2 text-black-100"
             />
           </div>
+         <Link 
+  to="/forgot-password" 
+  style={{ 
+    textDecoration: 'none', 
+    color: '#333', 
+    fontSize: '14px',
+    display: 'block',
+    marginBottom: '15px'
+  }}
+>
+  Forgot Your Password?
+</Link>
           <button
             type="submit"
             disabled={submitting}

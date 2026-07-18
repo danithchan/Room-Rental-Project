@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
 export function AdminProtectedRoute() {
-  const isAdmin = !!localStorage.getItem('ssrms_admin');
+  const isAdmin = !!localStorage.getItem('ssrms_admin'); // 💡 កែត្រង់នេះ
   
   if (!isAdmin) {
     return <Navigate to="/login" replace />;
@@ -16,7 +16,7 @@ export function TenantProtectedRoute() {
   return <Outlet />;
 }
 export function AdminPublicRoute() {
-  if (localStorage.getItem('ssrms_admin')) { 
+  if (localStorage.getItem('ssrms_admin')) { // 💡 កែត្រង់នេះ
     return <Navigate to="/" replace />;
   }
   return <Outlet />;

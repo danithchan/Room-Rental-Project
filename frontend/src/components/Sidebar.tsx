@@ -12,7 +12,7 @@ import {
   User,
   X,
 } from 'lucide-react';
-import { getCurrentAdmin, logout } from '../services/authService';
+import { getCurrentAdmin, logout, getAvatarUrl } from '../services/authService';
 
 interface NavItem {
   name: string;
@@ -82,9 +82,7 @@ function Sidebar({ isOpen, onClose }: SidebarProps) {
     fetch(`${import.meta.env.VITE_API_URL}/api/admin/${admin.adminid}`)
       .then((r) => r.json())
       .then((data) => {
-        if (data.avatarurl) {
-          setAvatarUrl(`${import.meta.env.VITE_API_URL}${data.avatarurl}`);
-        }
+        setAvatarUrl(getAvatarUrl(data.avatarurl));
       })
       .catch(() => {});
   }, [admin?.adminid]);

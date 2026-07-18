@@ -28,6 +28,7 @@ export interface MoveInInput {
 const BACKEND_URL = import.meta.env.VITE_API_URL;
 export const getImageUrl = (imageurl: string | null): string | null => {
   if (!imageurl) return null;
+  if (imageurl.startsWith('http://') || imageurl.startsWith('https://')) return imageurl;
   return `${BACKEND_URL}${imageurl}`;
 };
 
