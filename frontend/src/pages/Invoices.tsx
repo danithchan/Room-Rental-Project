@@ -89,14 +89,14 @@ function Invoices() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
         <div>
           <h1 className="text-2xl font-semibold text-gray-800 dark:text-white">វិក្កយបត្រ</h1>
           <p className="text-gray-500 dark:text-gray-400 mt-1">គ្រប់គ្រងវិក្កយបត្រទឹក-ភ្លើងប្រចាំខែ</p>
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="flex items-center gap-1.5 bg-pink-600 text-white px-4 py-2.5 rounded-lg text-sm font-medium"
+          className="flex items-center justify-center gap-1.5 bg-pink-600 hover:bg-pink-700 text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-colors w-full sm:w-auto shrink-0"
         >
           <Plus size={16} />
           បង្កើតវិក្កយបត្រថ្មី

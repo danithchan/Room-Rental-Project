@@ -10,6 +10,7 @@ import {
   LogOut,
   Home,
   User,
+  X,
 } from 'lucide-react';
 import { getCurrentAdmin, logout } from '../services/authService';
 
@@ -35,7 +36,7 @@ const settingsItems: NavItem[] = [
   { name: 'ប្រវត្តិរូប', path: '/profile', icon: <User size={18} /> },
 ];
 
-function NavSection({ title, items }: { title: string; items: NavItem[] }) {
+function NavSection({ title, items, onNavigate }: { title: string; items: NavItem[]; onNavigate: () => void }) {
   return (
     <div className="mb-6">
       <p className="px-3 mb-2 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
@@ -46,6 +47,8 @@ function NavSection({ title, items }: { title: string; items: NavItem[] }) {
           <NavLink
             key={item.path}
             to={item.path}
+            end={item.path === '/'}
+            onClick={onNavigate}
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                 isActive
@@ -63,7 +66,12 @@ function NavSection({ title, items }: { title: string; items: NavItem[] }) {
   );
 }
 
-function Sidebar() {
+interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+function Sidebar({ isOpen, onClose }: SidebarProps) {
   const navigate = useNavigate();
   const admin = getCurrentAdmin();
 
@@ -88,21 +96,44 @@ function Sidebar() {
   };
 
   return (
-    <aside className="w-64 h-screen bg-pink-100 dark:bg-gray-800 border-r border-pink-100 dark:border-gray-700 flex flex-col text-black dark:text-white">
-      <div className="px-6 py-5 flex items-center gap-3">
-        <div className="w-9 h-9 rounded-lg bg-pink-400 flex items-center justify-center text-white">
-          <Home size={20} />
+    <>
+      {/* Mobile overlay */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-40 lg:hidden"
+          onClick={onClose}
+          aria-hidden="true"
+        />
+      )}
+
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 w-64 h-screen bg-pink-100 dark:bg-gray-800 border-r border-pink-100 dark:border-gray-700 flex flex-col text-black dark:text-white transition-transform duration-300 ease-in-out
+        lg:sticky lg:top-0 lg:translate-x-0
+        ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
+      >
+      <div className="px-6 py-5 flex items-center gap-3 justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-lg bg-pink-400 flex items-center justify-center text-white shrink-0">
+            <Home size={20} />
+          </div>
+          <div>
+            <p className="text-black dark:text-white font-semibold text-sm">RoomRent Manager</p>
+            <p className="text-gray-600 dark:text-gray-400 text-xs">Admin Panel</p>
+          </div>
         </div>
-        <div>
-          <p className="text-black dark:text-white font-semibold text-sm">RoomRent Manager</p>
-          <p className="text-gray-600 dark:text-gray-400 text-xs">Admin Panel</p>
-        </div>
+        <button
+          onClick={onClose}
+          className="lg:hidden p-1.5 rounded-lg hover:bg-pink-200 dark:hover:bg-gray-700 transition-colors"
+          aria-label="បិទ Sidebar"
+        >
+          <X size={20} />
+        </button>
       </div>
 
       <nav className="flex-1 px-3 py-4 overflow-y-auto">
-        <NavSection title="មូលដ្ឋាន" items={mainItems} />
-        <NavSection title="ហិរញ្ញវត្ថុ" items={financeItems} />
-        <NavSection title="ផ្សេងៗ" items={settingsItems} />
+        <NavSection title="មូលដ្ឋាន" items={mainItems} onNavigate={onClose} />
+        <NavSection title="ហិរញ្ញវត្ថុ" items={financeItems} onNavigate={onClose} />
+        <NavSection title="ផ្សេងៗ" items={settingsItems} onNavigate={onClose} />
       </nav>
 
       <div className="px-6 py-4 border-t border-pink-100 dark:border-gray-700">
@@ -135,7 +166,8 @@ function Sidebar() {
           ចាកចេញ
         </button>
       </div>
-    </aside>
+      </aside>
+    </>
   );
 }
 

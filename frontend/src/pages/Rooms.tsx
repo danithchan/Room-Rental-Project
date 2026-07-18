@@ -205,14 +205,14 @@ function Rooms() {
         className="hidden"
       />
 
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
         <div>
           <h1 className="text-2xl font-semibold text-gray-800 dark:text-white">គ្រប់គ្រងបន្ទប់</h1>
           <p className="text-gray-500 dark:text-gray-400 mt-1">គ្រប់គ្រងបន្ទប់ជួលរបស់អ្នកនៅទីនេះ</p>
         </div>
         <button
           onClick={openAddModal}
-          className="flex items-center gap-1.5 bg-pink-600 text-white px-4 py-2.5 rounded-lg text-sm font-medium"
+          className="flex items-center justify-center gap-1.5 bg-pink-600 hover:bg-pink-700 text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-colors w-full sm:w-auto shrink-0"
         >
           <Plus size={16} />
           បន្ថែមបន្ទប់ថ្មី

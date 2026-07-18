@@ -109,9 +109,9 @@ function TenantDashboard() {
     <div className="min-h-screen bg-sky-50 p-4 md:p-8">
       <div className="max-w-3xl mx-auto">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
           <div>
-            <p className="text-2xl font-semibold text-gray-800">សួស្តី, {profile.fullname}</p>
+            <p className="text-xl sm:text-2xl font-semibold text-gray-800">សួស្តី, {profile.fullname}</p>
             {activeContract && (
               <p className="text-sm text-gray-500 mt-0.5">
                 បន្ទប់ {activeContract.roomnumber} · {activeContract.room?.roomtype || ''}
@@ -120,7 +120,7 @@ function TenantDashboard() {
           </div>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-1.5 text-sm bg-white border border-gray-200 px-4 py-2 rounded-lg font-medium text-gray-600 hover:bg-gray-50"
+            className="flex items-center justify-center gap-1.5 text-sm bg-white border border-gray-200 px-4 py-2 rounded-lg font-medium text-gray-600 hover:bg-gray-50 transition-colors w-full sm:w-auto shrink-0"
           >
             <LogOut size={14} />
             ចាកចេញ
