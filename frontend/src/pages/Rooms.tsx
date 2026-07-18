@@ -129,8 +129,8 @@ function Rooms() {
     try {
       await deleteRoom(id);
       setRooms((prev) => prev.filter((r) => r.roomid !== id));
-    } catch (err) {
-      alert('មិនអាចលុបបន្ទប់បានទេ');
+    } catch (err: any) {
+      alert(err?.response?.data?.error || 'មិនអាចលុបបន្ទប់បានទេ');
       console.error(err);
     }
   };

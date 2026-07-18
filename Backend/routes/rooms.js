@@ -2,12 +2,10 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const prisma = require('../prismaClient');
-const { uploadBufferToCloudinary } = require('../utils/uploadToCloudinary');
-
 
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB max
+  limits: { fileSize: 2 * 1024 * 1024 }, // 2MB max — stored as base64 text in Postgres
   fileFilter: (req, file, cb) => {
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
     if (allowedTypes.includes(file.mimetype)) {
@@ -71,10 +69,10 @@ router.post('/:id/upload-image', upload.single('image'), async (req, res) => {
   } 
 
   try {
-    const result = await uploadBufferToCloudinary(req.file.buffer, 'ssrms/rooms');
+    const base64Image = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
     const room = await prisma.Room.update({
       where: { roomid: roomId },
-      data: { imageurl: result.secure_url }
+      data: { imageurl: base64Image }
     });
     res.json(room);
   } catch (err) {
@@ -163,6 +161,11 @@ router.delete('/:id', async (req, res) => {
     });
     res.json({ message: 'Room deleted successfully' });
   } catch (err) {
+    if (err.code === 'P2003') {
+      return res.status(400).json({
+        error: 'មិនអាចលុបបន្ទប់នេះបានទេ ព្រោះមានកិច្ចសន្យា ឬការជួសជុលភ្ជាប់ជាមួយបន្ទប់នេះនៅឡើយ។',
+      });
+    }
     res.status(500).json({ error: err.message });
   }
 });

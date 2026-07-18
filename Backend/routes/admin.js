@@ -5,9 +5,11 @@ const multer = require('multer');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-const { uploadBufferToCloudinary } = require('../utils/uploadToCloudinary');
 
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 2 * 1024 * 1024 }, // 2MB max — stored as base64 text in Postgres
+});
 
 const authMiddleware = (req, res, next) => {
   const token = req.headers['authorization'];
@@ -167,12 +169,12 @@ router.post('/:id/upload-avatar', authMiddleware, upload.single('avatar'), async
     return res.status(400).json({ error: 'សូម Upload រូបភាព' });
   }
   try {
-    const result = await uploadBufferToCloudinary(req.file.buffer, 'ssrms/avatars');
+    const base64Avatar = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
     const updatedAdmin = await prisma.Admin.update({
       where: { adminid: parseInt(req.params.id) },
-      data: { avatarurl: result.secure_url },
+      data: { avatarurl: base64Avatar },
     });
-    res.json({ message: 'Avatar uploaded successfully', avatarurl: result.secure_url });
+    res.json({ message: 'Avatar uploaded successfully', avatarurl: base64Avatar });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

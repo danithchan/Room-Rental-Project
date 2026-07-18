@@ -12,7 +12,7 @@ model Admin {
   password      String    @db.VarChar(255)
   fullname      String    @db.VarChar(100)
   phone         String?   @db.VarChar(15)
-  avatarurl     String?   @db.VarChar(255)
+  avatarurl     String?   @db.Text
   resetToken    String?
   resetTokenExp DateTime?
   rooms         Room[]
@@ -25,7 +25,7 @@ model Room {
   price        Decimal         @db.Decimal(10, 2)
   status       String          @default("Available") @db.VarChar(20)
   adminid      Int
-  imageurl     String?         @db.VarChar(255)
+  imageurl     String?         @db.Text
   contracts    LeaseContract[]
   maintenances Maintenance[]
   admin        Admin           @relation(fields: [adminid], references: [adminid], onDelete: NoAction, onUpdate: NoAction, map: "FK_Room_Admin")
