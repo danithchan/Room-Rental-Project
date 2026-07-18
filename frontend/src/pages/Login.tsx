@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Lock, Home } from 'lucide-react';
 import { login } from '../services/authService';
-import { Link } from 'react-router-dom';
-
 function Login() {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
@@ -86,18 +84,6 @@ function Login() {
               className="absolute right-4 top-1/2 -translate-y-1/2 text-black-100"
             />
           </div>
-         <Link 
-  to="/forgot-password" 
-  style={{ 
-    textDecoration: 'none', 
-    color: '#333', 
-    fontSize: '14px',
-    display: 'block',
-    marginBottom: '15px'
-  }}
->
-  Forgot Your Password?
-</Link>
           <button
             type="submit"
             disabled={submitting}
