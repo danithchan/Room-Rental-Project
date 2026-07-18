@@ -63,7 +63,7 @@ function Login() {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="Username"
+              placeholder="Username: @nikkie160805"
               autoFocus
               className="w-full bg-black/15 text-black placeholder-black/70 rounded-xl pl-4 pr-11 py-3 text-sm outline-none focus:bg-white/25 transition-colors"
             />
@@ -78,7 +78,7 @@ function Login() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
+              placeholder="Password: 160805 "
               className="w-full bg-black/15 text-black placeholder-black-100/70 rounded-xl pl-4 pr-11 py-3 text-sm outline-none focus:bg-white/25 transition-colors"
             />
             <Lock

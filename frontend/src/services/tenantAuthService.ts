@@ -1,10 +1,47 @@
 import axios from 'axios';
 
-const API_BASE_URL = `${import.meta.env.VITE_API_URL}/api/tenant-auth`;;
+const API_BASE_URL = `${import.meta.env.VITE_API_URL}/api/tenant-auth`;
+
 const TENANT_KEY = 'ssrms_tenant';
 const TENANT_TOKEN_KEY = 'ssrms_tenant_token';
 
-const api = axios.create({ baseURL: API_BASE_URL });
+const api = axios.create({
+  baseURL: API_BASE_URL,
+});
+
+// Automatically attach token to every request
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem(TENANT_TOKEN_KEY);
+
+    if (token) {
+     config.headers.Authorization = `Bearer ${token}`;
+      // If your backend expects Bearer token, use:
+      // config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Automatically logout if token is expired
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (
+      error.response?.status === 401 ||
+      error.response?.status === 403
+    ) {
+      localStorage.removeItem(TENANT_KEY);
+      localStorage.removeItem(TENANT_TOKEN_KEY);
+
+      window.location.href = '/tenant/login';
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 export interface TenantInvoice {
   invoiceid: number;
@@ -46,20 +83,29 @@ export interface LoginInput {
 }
 
 export const tenantLogin = async (data: LoginInput) => {
-  const response = await api.post<{ token: string; tenant: any }>('/login', data);
+  const response = await api.post<{ token: string; tenant: any }>(
+    '/login',
+    data
+  );
+
   localStorage.setItem(TENANT_KEY, JSON.stringify(response.data.tenant));
   localStorage.setItem(TENANT_TOKEN_KEY, response.data.token);
+
   return response.data.tenant;
 };
 
 export const tenantLogout = () => {
   localStorage.removeItem(TENANT_KEY);
   localStorage.removeItem(TENANT_TOKEN_KEY);
+
+  window.location.href = '/tenant/login';
 };
 
 export const getCurrentTenant = () => {
   const stored = localStorage.getItem(TENANT_KEY);
+
   if (!stored) return null;
+
   try {
     return JSON.parse(stored);
   } catch {
@@ -68,18 +114,22 @@ export const getCurrentTenant = () => {
 };
 
 export const isTenantLoggedIn = (): boolean => {
-  return getCurrentTenant() !== null && localStorage.getItem(TENANT_TOKEN_KEY) !== null;
+  return !!localStorage.getItem(TENANT_TOKEN_KEY);
 };
 
-const authHeader = () => ({
-  headers: { Authorization: localStorage.getItem(TENANT_TOKEN_KEY) || '' },
-});
 export const fetchTenantProfile = async (): Promise<TenantProfile> => {
-  const response = await api.get<TenantProfile>('/me', authHeader());
+  const response = await api.get<TenantProfile>('/me');
   return response.data;
 };
 
-export const reportMaintenance = async (description: string, roomid: number) => {
-  const response = await api.post('/maintenance', { description, roomid }, authHeader());
+export const reportMaintenance = async (
+  description: string,
+  roomid: number
+) => {
+  const response = await api.post('/maintenance', {
+    description,
+    roomid,
+  });
+
   return response.data;
 };
